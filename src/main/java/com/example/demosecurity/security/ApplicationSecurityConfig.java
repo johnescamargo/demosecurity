@@ -12,7 +12,13 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-
-		http.authorizeHttpRequests().anyRequest().authenticated().and().httpBasic();
+		http
+			.authorizeHttpRequests()
+			.antMatchers("/", "index", "/css/*" , "/js/*")
+			.permitAll()
+			.anyRequest()
+			.authenticated()
+			.and()
+			.httpBasic();
 	}
 }
