@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import static com.example.demosecurity.security.ApplicationUserRole.*;
 
 @SuppressWarnings("deprecation")
 @Configuration
@@ -18,6 +19,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	private final PasswordEncoder passwordEncoder;
+	
 	
 	@Autowired
 	public ApplicationSecurityConfig(PasswordEncoder passwordEncoder) {
@@ -43,9 +45,15 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 		UserDetails johnesUser = User.builder()
 					.username("johnescamargo")
 					.password(passwordEncoder.encode("password"))
-					.roles("STUDENT")// ROLE_STUDENT
+					.roles(STUDENT.name())// ROLE_STUDENT
 					.build();
 		
-		return new InMemoryUserDetailsManager(johnesUser);
+		UserDetails cintiaUser = User.builder()
+				.username("cintia")
+				.password(passwordEncoder.encode("password"))
+				.roles(ADMIN.name())// ROLE_STUDENT
+				.build();
+		
+		return new InMemoryUserDetailsManager(johnesUser, cintiaUser);
 	}
 }
